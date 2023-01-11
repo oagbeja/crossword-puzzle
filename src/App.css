@@ -13,6 +13,22 @@
   }
 }
 
+.container{
+  min-width: 700px;
+  width:70%
+}
+.alignLeft{
+  text-align: left;
+}
+.alignRight{
+  text-align: right;
+}
+
+.dflex-container{
+  display: flex;
+  justify-content: space-around;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
