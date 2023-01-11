@@ -2,6 +2,8 @@ import logo from "./logo.svg";
 import "./App.css";
 import { useState } from "react";
 import createPuzzle from "./fn";
+import displayTable from "./table";
+import printDiv from "./print";
 
 function App() {
   const [itemCount, setItemCount] = useState(1);
@@ -11,9 +13,11 @@ function App() {
 
   const changeItemArray = (val, ind) => {
     let valArr = [...itemArray];
-    valArr[ind] = val;
-    console.log(valArr, ind);
-    setItemArray(valArr);
+    if (/^[A-Za-z]+$/.test(val)) {
+      valArr[ind] = val;
+      console.log(valArr, ind);
+      setItemArray(valArr);
+    }
   };
 
   const displayContents = () => {
@@ -21,11 +25,12 @@ function App() {
     console.log(arr);
     let result = arr.map((_, i) => {
       return (
-        <div className="dflex-container" key={`Cont${i}`}>
-          <div className="alignLeft">{`Item ${i + 1}`} </div>
-          <div className="alignRight">
+        <div className="row mb-2" key={`Cont${i}`}>
+          <div className="col-sm-6">{`Item ${i + 1}`} </div>
+          <div className="col-sm-6">
             <input
               type="text"
+              className="form-control"
               value={itemArray[i] ?? ""}
               onChange={(e) => changeItemArray(e.target.value, i)}
             />
@@ -44,36 +49,60 @@ function App() {
   };
 
   const showTable = () => {
-    if (itemsTable.length === 0) return null;
+    if (!itemsTable || itemsTable.length === 0) return null;
+    return displayTable(...itemsTable);
   };
 
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img
+          src="https://www.apostolicfaithweca.org/themes/custom/afmweca_vbs4/logo.svg"
+          alt="logo"
+        />
 
         <div className="container">
-          <div>Crossword Puzzle</div>
           <div>
-            <div className="dflex-container">
-              <div className="alignLeft">Dimension </div>
-              <div className="alignRight">
+            <h1>Crossword Puzzle</h1>
+          </div>
+          <div>
+            <div className="row mb-3">
+              <div className="col-sm-6">Dimension </div>
+              <div className="col-sm-6">
                 <input
                   type="number"
+                  className="form-control"
                   onChange={(e) => setDimension(e.target.value)}
                 />
               </div>
             </div>
             {displayContents()}
-            <button type="button" onClick={() => setItemCount(itemCount + 1)}>
-              Add More +
+            <div style={{ textAlign: "right" }}>
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={() => setItemCount(itemCount + 1)}
+              >
+                Add More +
+              </button>
+            </div>
+          </div>
+          <div className="col-sm-12 my-2">
+            <button
+              type="button"
+              className="btn btn-primary btn-sm btn-block"
+              onClick={() => crtPuzzle()}
+            >
+              Submit
             </button>
           </div>
 
-          <button type="button" onClick={() => crtPuzzle()}>
-            Submit
-          </button>
-          <div>Print Out</div>
+          <div id="GFG">{showTable()}</div>
+          {!(!itemsTable || itemsTable.length === 0) && (
+            <button type="button" className="btn btn-danger" onClick={printDiv}>
+              Print Out
+            </button>
+          )}
         </div>
       </header>
     </div>
