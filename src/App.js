@@ -1,6 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
 import { useState } from "react";
+import createPuzzle from "./fn";
 
 function App() {
   const [itemCount, setItemCount] = useState(1);
@@ -35,6 +36,11 @@ function App() {
     return result;
   };
 
+  const crtPuzzle = () => {
+    let result = createPuzzle(dimension, itemArray);
+    console.log(result);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -58,7 +64,7 @@ function App() {
             </button>
           </div>
 
-          <button type="button" onClick={() => {}}>
+          <button type="button" onClick={() => crtPuzzle()}>
             Submit
           </button>
           <div>Print Out</div>
