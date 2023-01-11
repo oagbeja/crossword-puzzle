@@ -7,6 +7,7 @@ function App() {
   const [itemCount, setItemCount] = useState(1);
   const [dimension, setDimension] = useState("");
   const [itemArray, setItemArray] = useState([]);
+  const [itemsTable, setItemsTable] = useState([]);
 
   const changeItemArray = (val, ind) => {
     let valArr = [...itemArray];
@@ -39,6 +40,11 @@ function App() {
   const crtPuzzle = () => {
     let result = createPuzzle(dimension, itemArray);
     console.log(result);
+    setItemsTable(result);
+  };
+
+  const showTable = () => {
+    if (itemsTable.length === 0) return null;
   };
 
   return (
