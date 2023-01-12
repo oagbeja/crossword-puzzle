@@ -1,4 +1,4 @@
-let modeArray = ["V", "H"];
+let modeArray = ["V", "H", "D"];
 let alpArray = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
 const twoDimensionArray = (m, n) => {
@@ -46,6 +46,38 @@ const processVertical = (arr, coord, word, dimension) => {
   return true;
 };
 
+const processDiagonal = (arr, coord, word, dimension) => {
+  let n = 0;
+  let i = coord[0];
+  let j = coord[1];
+  while (n < word.length) {
+    if (
+      !arr[i] ||
+      !(!arr[i][j] && arr[i][j] === "") ||
+      (arr[i][j] && arr[i][j] !== "")
+    )
+      return false;
+    i++;
+    j++;
+    n++;
+  }
+
+  return true;
+};
+
+const addDiagonal = (arr, coord, word) => {
+  let n = 0;
+  let i = coord[0];
+  let j = coord[1];
+  while (n < word.length) {
+    arr[i][j] = word[n];
+    n++;
+    i++;
+    j++;
+  }
+  return arr;
+};
+
 const addHorizontal = (arr, coord, word) => {
   let n = 0;
   for (let i = coord[1]; i < word.length + coord[1]; i++) {
@@ -74,6 +106,9 @@ const processFlow = (arr, coord, word, dimension) => {
         break;
       case "V":
         result = processVertical(arr, coord, word, dimension);
+        break;
+      case "D":
+        result = processDiagonal(arr, coord, word, dimension);
         break;
     }
     if (result === true) return [true, el];
@@ -109,6 +144,9 @@ const addToArr = (procResult) => {
       break;
     case "V":
       arr = addVertical(arr, coord, word);
+      break;
+    case "D":
+      arr = addDiagonal(arr, coord, word);
       break;
   }
   return arr;
