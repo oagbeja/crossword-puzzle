@@ -2,12 +2,22 @@ const displayTable = (arr, itemsWorked) => {
   return (
     <div className="row ">
       <div className="col-sm-12 card">
-        <table className="table table-bordered  table-striped ">
+        <table className="table table-bordered " style={{ borderSpacing: 30 }}>
           {arr.map((el, idx) => {
             return (
               <tr key={`Tr${idx}`}>
                 {el.map((elm, idxm) => {
-                  return <td key={`Td${idxm}`}>{elm}</td>;
+                  return (
+                    <td
+                      key={`Td${idxm}`}
+                      style={{
+                        padding: "10px",
+                        border: "1px solid #000",
+                      }}
+                    >
+                      {elm}
+                    </td>
+                  );
                 })}
               </tr>
             );
